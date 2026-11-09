@@ -14,5 +14,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install numpy pandas PySide6
+      - name: Compile all application modules
+        run: python -m compileall -q neuralforge
+      - name: Smoke-test desktop window
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -c "from PySide6.QtWidgets import QApplication; from neuralforge.ui.main_window import MainWindow; app=QApplication([]); window=MainWindow(); print('NeuralForge desktop window created'); window.close()"
       - name: Run tests
         run: python -m unittest discover -s tests -v
