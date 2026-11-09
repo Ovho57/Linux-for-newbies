@@ -21,4 +21,4 @@ class MainWindow(QMainWindow):
   file=self.menuBar().addMenu("File"); exit_action=QAction("Exit",self); exit_action.triggered.connect(self.close); file.addAction(exit_action)
   for name in ("Edit","View","Project","Architecture","Training","Tools"):self.menuBar().addMenu(name)
   help=self.menuBar().addMenu("Help"); about=QAction("About NeuralForge AI",self); about.triggered.connect(self.about); help.addAction(about)
- def about(self):QMessageBox.about(self,"About","NeuralForge AI 0.2.0\nLocal neural-network engineering and learning laboratory.")
+ def about(self):QMessageBox.about(self,"About","NeuralForge AI 0.3.0\nLocal neural-network engineering and learning laboratory.")
