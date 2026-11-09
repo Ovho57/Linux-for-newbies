@@ -28,7 +28,7 @@ The optional `neuralforge.core.torch_engine` backend provides executable Dense, 
 
 This advanced backend is a Python API at this stage; the desktop Training Center still uses the NumPy dense engine. CNN/RNN models are not yet editable and trainable end-to-end from the desktop UI.
 
-### Extension and distribution infrastructure
+### Mobile companion\n\nInstall the optional mobile server with `pip install -e ".[mobile]"`. Export a model bundle, then run:\n\n```bash\npython -m neuralforge.mobile_server --model PATH_TO_EXPORTED_MODEL --host 0.0.0.0 --port 8765\n```\n\nThe terminal prints a random access token. On a phone connected to the same trusted Wi-Fi network, open the computer's LAN IP at port 8765 and enter that token. The companion sends inference requests to the local computer; it does not upload the model to a cloud service. Stop the server when finished and do not share the token.\n\n### Extension and distribution infrastructure
 - In-app Plugin Manager for discovering and loading installed Python entry-point plugins.
 - Trusted custom PyTorch layer registration through `register_layer`.
 - GitHub Actions packaging workflow for Windows and Linux executable folders.
@@ -88,7 +88,7 @@ The `.github/workflows/package.yml` workflow builds Windows and Linux packages w
 
 - Connect the optional PyTorch CNN/RNN backend to the desktop architecture editor and Training Center.
 - Add in-app plugin installation/uninstallation and per-plugin permission isolation.
-- Build and test a mobile companion interface against real phones.
+- Test the mobile companion on real Android/iOS devices and add installable PWA/offline shell support.
 - Produce signed releases after signing credentials are configured.
 - Add end-to-end GUI tests on Windows and Linux and test packaged binaries on clean machines.
 
