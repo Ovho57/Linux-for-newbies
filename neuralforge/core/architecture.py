@@ -29,7 +29,7 @@ def validate_architecture(layers: list[LayerSpec]) -> list[str]:
     for index, layer in enumerate(layers):
         if layer.units < 1:
             errors.append(f"Layer {index + 1}: units must be at least 1.")
-        if layer.kind.lower() not in {"input", "dense", "dropout", "output"}:
+        if layer.kind.lower() not in {"input", "dense", "dropout", "output", "conv1d", "rnn", "custom"}:
             errors.append(f"Layer {index + 1}: unsupported layer type '{layer.kind}'.")
         if layer.kind.lower() == "dropout" and not 0 <= layer.dropout < 1:
             errors.append(f"Layer {index + 1}: dropout must be in [0, 1).")
