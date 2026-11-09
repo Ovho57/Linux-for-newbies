@@ -15,7 +15,10 @@ def build_mlp(layers, seed=7):
         if kind == "dropout":
             if not 0 <= layer.dropout < 1:
                 raise ValueError("Dropout rate must be in [0, 1).")
-            pending_dropout = layer.dropout
+            if dropout:
+                dropout[-1] = layer.dropout
+            else:
+                pending_dropout = layer.dropout
             continue
         if kind not in {"dense", "output"}:
             raise ValueError(f"Layer type {layer.kind!r} is not executable by the NumPy dense engine.")
