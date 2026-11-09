@@ -82,7 +82,7 @@ python -m unittest discover -s tests -v
 
 ## Desktop packages
 
-The `.github/workflows/package.yml` workflow builds Windows and Linux packages when manually dispatched or when a version tag such as `v0.3.0` is pushed. These builds are unsigned. Windows code-signing requires a certificate and protected signing credentials supplied by the release owner.
+The `.github/workflows/package.yml` workflow builds Windows and Linux packages when manually dispatched or when a version tag such as `v0.3.0` is pushed. Builds are unsigned by default. For signed Windows tagged releases, add repository Actions secrets `WINDOWS_CERTIFICATE_PFX` (base64-encoded PFX) and `WINDOWS_CERTIFICATE_PASSWORD`. Linux signing is not configured.
 
 ## Still outstanding
 
