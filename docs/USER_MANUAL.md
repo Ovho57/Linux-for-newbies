@@ -34,3 +34,20 @@ Install the repository in editable mode using pip install -e . Then use neuralfo
 
 ## Limitations
 CNN/RNN execution, real dropout training, GPU acceleration, custom executable layers, full shell terminal, mobile companion, plugin system and installer are not included yet.
+
+
+## Advanced PyTorch backend
+
+Install the optional backend with `pip install -e ".[torch]"`. The Python API in `neuralforge.core.torch_engine` supports dense, dropout, Conv1D and RNN layers. Conv1D inputs use batch/channel/sequence order; RNN inputs use batch/sequence/feature order. The backend selects CUDA when PyTorch reports it is available, otherwise CPU. The desktop Training Center currently uses the NumPy dense engine.
+
+## Dropout and gradient inspection
+
+Dense layer activation and dropout properties are executed by the NumPy training engine. Dropout is active only during training and disabled during inference. For an educational tensor trace, call `model.trace_gradients(inputs, targets)`; it returns forward activations, pre-activations, errors, deltas and weight/bias gradients.
+
+## Plugins
+
+Open Plugin Manager and select Discover installed plugins. Plugins are Python entry points in the `neuralforge.plugins` group. Select one and choose Load selected plugin. Loading executes third-party Python code with the same permissions as NeuralForge; install only trusted plugins. Plugin installation and permission sandboxing are not yet provided in the UI.
+
+## Desktop builds
+
+The GitHub Actions workflow named Build desktop packages can be manually run or triggered by a version tag. It produces Windows and Linux executable-folder archives. These builds are unsigned; signing needs release-owner credentials.
