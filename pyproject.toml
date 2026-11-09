@@ -12,6 +12,7 @@ dependencies = ["PySide6>=6.6", "numpy>=1.26", "pandas>=2.1"]
 [project.optional-dependencies]
 torch = ["torch>=2.2"]
 packaging = ["pyinstaller>=6.0"]
+mobile = ["fastapi>=0.110", "uvicorn[standard]>=0.27"]
 
 [project.scripts]
 neuralforge = "neuralforge.cli:main"
