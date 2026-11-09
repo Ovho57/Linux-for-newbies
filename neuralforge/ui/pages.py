@@ -3,11 +3,12 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from PySide6.QtCore import Qt,QThread,Signal
-from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTableWidget,QTableWidgetItem,QComboBox,QSpinBox,QDoubleSpinBox,QFormLayout,QGroupBox,QMessageBox,QFileDialog,QPlainTextEdit,QTabWidget,QLineEdit,QProgressBar,QSplitter,QInputDialog)
+from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTableWidget,QTableWidgetItem,QComboBox,QSpinBox,QDoubleSpinBox,QFormLayout,QGroupBox,QMessageBox,QFileDialog,QPlainTextEdit,QTabWidget,QLineEdit,QProgressBar,QSplitter,QInputDialog,QListWidget)
 from ..core.architecture import LayerSpec,validate_architecture
 from ..core.math_engine import weighted_sum_trace,safe_evaluate
 from ..core.mlp import MLP
 from ..core.model_builder import build_mlp
+from ..core.plugin_manager import PluginManager
 from ..core.project_store import default_project_dir,save_project,load_project
 from ..core.model_io import architecture_dimensions,save_model_bundle
 from .network_canvas import NetworkCanvas
@@ -177,3 +178,31 @@ class ManualPage(QWidget):
   if value:
    c=self.text.document().find(value)
    if not c.isNull():self.text.setTextCursor(c)
+
+
+class PluginPage(QWidget):
+ def __init__(self):
+  super().__init__(); self.manager=PluginManager(); l=QVBoxLayout(self)
+  l.addWidget(QLabel("<h2>Plugin Manager</h2>"))
+  warning=QLabel("Plugins are trusted Python code and run with the application's permissions. Only use plugins from developers you trust.")
+  warning.setWordWrap(True); l.addWidget(warning)
+  row=QHBoxLayout(); self.items=QListWidget(); row.addWidget(self.items,1)
+  controls=QVBoxLayout(); refresh=QPushButton("Discover installed plugins"); refresh.clicked.connect(self.refresh); controls.addWidget(refresh)
+  load=QPushButton("Load selected plugin"); load.clicked.connect(self.load_selected); controls.addWidget(load); controls.addStretch(1); row.addLayout(controls); l.addLayout(row,1)
+  self.output=QPlainTextEdit(); self.output.setReadOnly(True); self.output.setMaximumHeight(150); l.addWidget(self.output)
+  self.refresh()
+ def refresh(self):
+  self.items.clear()
+  try:
+   plugins=self.manager.discover()
+   for item in plugins:self.items.addItem(f"{item['name']} — {item['value']}")
+   self.output.setPlainText(f"Discovered {len(plugins)} installed plugin(s). Plugins are installed separately with pip.")
+  except Exception as exc:self.output.setPlainText("Discovery failed: "+str(exc))
+ def load_selected(self):
+  item=self.items.currentItem()
+  if item is None:return
+  name=item.text().split(" — ",1)[0]
+  try:
+   plugin=self.manager.load(name)
+   self.output.setPlainText(f"Loaded plugin: {name}\nEntry point result: {plugin!r}")
+  except Exception as exc:self.output.setPlainText(f"Plugin load failed: {exc}")
