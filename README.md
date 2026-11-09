@@ -1,88 +1,67 @@
 # NeuralForge AI
 
-**A classic desktop laboratory for building, training, inspecting and understanding neural networks.**
+A local Python desktop laboratory for designing, training, inspecting and exporting small neural networks. Its interface uses a classic cream-and-beige engineering-software aesthetic.
 
-NeuralForge AI is a local Python desktop application with a deliberately old-school scientific-software interface: warm cream workspaces, beige tool panels, traditional menus and practical engineering layouts.
+## Current release: 0.2.0 — active development
 
-The project is being developed in stages. The current foundation includes a working desktop shell, editable feed-forward network architecture, a NumPy neural-network engine, a mathematical workbench, CSV dataset loading, training and prediction workflows, and local project saving.
+### Implemented
+- PySide6 desktop shell, cream theme and navigation.
+- Interactive sequential architecture diagram: select layers, edit properties, add/remove and reorder hidden layers.
+- Feed-forward architecture validation.
+- NumPy multilayer perceptron with forward propagation and backpropagation.
+- XOR demonstration training in a background worker.
+- CSV dataset preview and numeric target selection.
+- Mathematical Workbench with three explanation levels and a restricted formula evaluator.
+- Prediction testing with intermediate forward-pass activations.
+- Save/load architecture project JSON.
+- Portable model export with weights, configuration, standalone prediction script and requirements.
+- CLI commands to inspect and run exported models.
+- In-app Python command console.
+- Offline user manual.
 
-> **Status:** Early development. This repository is not yet a finished product. Features are marked according to what is actually implemented.
+### Not yet implemented
+Convolutional/recurrent execution, true custom-layer execution, dropout training, GPU acceleration, full tensor-level gradient tracing, mobile companion, plugin manager, installer and signed release.
 
-## Design philosophy
+## Install on Windows
 
-- Classic 2003–2008 engineering-software aesthetic.
-- Local-first: core work does not require an AI API or internet connection.
-- Educational: explain the mathematics behind model operations.
-- Practical: generated models and saved projects belong to the user.
-- Honest: no fake training progress or placeholder success messages.
-
-## Current features
-
-- [x] PySide6 desktop window with classic cream/beige styling.
-- [x] Dashboard and workspace navigation.
-- [x] Add, remove and reorder Dense, Input, Dropout and Output layer definitions.
-- [x] Validate feed-forward architecture dimensions.
-- [x] NumPy multilayer perceptron with forward pass and backpropagation.
-- [x] Train a small classifier on CSV data or the built-in XOR example.
-- [x] Training loss history and accuracy reporting.
-- [x] Mathematical Workbench with Beginner, Intermediate and Advanced explanations.
-- [x] Editable demonstration values for weighted sums.
-- [x] Save and load model weights and project configuration locally.
-- [x] Test predictions using numeric input values.
-- [x] Unit tests for the model engine and mathematics utilities.
-
-## Planned modules
-
-The following are planned, not yet complete: visual node-and-connection canvas, convolutional and recurrent networks, custom Python layers, advanced tensor tracing, computer vision and NLP labs, plugin manager, experiment comparison, integrated terminal, mobile companion, installer and signed releases.
-
-## Requirements
-
-- Python 3.10 or newer
-- Windows 10/11 initially; other platforms may work but are not yet officially tested
-
-## Install
-
-Create and activate a virtual environment:
-
-```powershell
-py -3 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-```
-
-Install dependencies:
-
-```powershell
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-```
-
+Create an environment:
+    py -3 -m venv .venv
+    .\.venv\Scripts\Activate.ps1
+Install:
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
 Run:
+    python main.py
 
-```powershell
-python main.py
-```
+If activation is blocked:
+    .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+    .\.venv\Scripts\python.exe main.py
 
-If PowerShell blocks activation, use the environment's interpreter directly:
+## CLI
 
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe main.py
-```
+Install editable:
+    pip install -e .
+Inspect a model:
+    neuralforge info PATH_TO_EXPORTED_MODEL
+Run inference:
+    neuralforge run PATH_TO_EXPORTED_MODEL --input 0,1
+
+From the repository root you can instead use:
+    python -m neuralforge.cli info PATH_TO_EXPORTED_MODEL
+    python -m neuralforge.cli run PATH_TO_EXPORTED_MODEL --input 0,1
 
 ## Tests
 
-```powershell
-python -m unittest discover -s tests -v
-```
+    python -m unittest discover -s tests -v
 
-## Project data
+## Export bundle
 
-Projects are saved in the user's Documents folder under `NeuralForge/projects` by default. Model weights are stored as NumPy `.npz` files and configuration as JSON.
+An export contains config.json, weights.npz, predict.py, requirements.txt and README.md. A trained bundle can run without opening the desktop app, but the target computer still needs Python and NumPy unless separately packaged.
 
-## Safety and execution
+## Honest limitations
 
-NeuralForge does not execute arbitrary user-entered formulas with Python `eval`. The formula utility accepts a restricted mathematical expression grammar. Custom Python layer execution and a general-purpose integrated terminal are not implemented in this initial foundation.
+The current trainer is a small educational dense network. The canvas edits a sequential architecture; it is not a freeform graph editor. Dropout is metadata only and not applied by the trainer. The mathematical workbench has editable worked calculations, not complete live symbolic tracing of every model gradient.
 
 ## License
 
-No license has been selected yet. Until a license is added, standard copyright applies to contributions in this repository.
+No license has been selected. Standard copyright applies until one is added.

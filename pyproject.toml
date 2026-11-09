@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neuralforge-ai"
+version = "0.2.0"
+description = "A local neural-network engineering laboratory"
+requires-python = ">=3.10"
+dependencies = ["PySide6>=6.6", "numpy>=1.26", "pandas>=2.1"]
+
+[project.scripts]
+neuralforge = "neuralforge.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["neuralforge*"]

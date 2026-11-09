@@ -1,37 +1,36 @@
 # NeuralForge AI — User Manual
 
-## 1. Start the application
+## Start
+Install requirements and run python main.py from the repository root.
 
-Install dependencies from `requirements.txt`, then run `python main.py`.
+## Dashboard
+Shows the application version, execution mode, model engine and default project folder.
 
-## 2. Dashboard
+## Neural Network Architect
+Select a node in the diagram. Edit its type, unit count, activation or dropout metadata in the inspector, then Apply properties. Add Dense or Dropout hidden entries, remove hidden entries and move them left or right. Input must be first and Output last.
 
-The Dashboard describes the local application, current model engine and default project folder.
+The current NumPy trainer executes dense/output transformations. Dropout is metadata only and is not applied during training.
 
-## 3. Neural Network Architect
+## Mathematical Workbench
+Choose Beginner, Intermediate or Advanced. Edit weights, inputs and bias, then calculate the weighted sum. The formula evaluator supports arithmetic, powers, parentheses, pi, e and selected mathematical functions. It uses a restricted parser, not arbitrary Python execution.
 
-The first row is the Input layer and the last row is the Output layer. Edit units and activation values directly in the table. Add Dense or Dropout layers, remove hidden layers, and move hidden layers up or down. The status message reports architecture validation.
+## Dataset Studio
+Open a CSV and select a numeric target. Other numeric columns become inputs. The preview shows up to 100 rows. The original CSV is not modified.
 
-The initial trainer uses the input width and the widths of Dense and Output layers. Dropout entries are currently definitions only and do not affect training.
+## Training Center
+Load the built-in XOR example or a numeric CSV. Set epochs and learning rate, then start training. A Qt worker keeps the interface responsive and reports mean squared error.
 
-## 4. Mathematical Workbench
+## Testing Laboratory
+Enter comma-separated values matching the input width. Results include the prediction and intermediate forward-pass activations.
 
-Select Beginner, Intermediate or Advanced. Edit the weights, inputs and bias, then calculate the weighted sum. The Safe Formula Evaluator supports arithmetic, powers, parentheses, pi, e and selected math functions.
+## Save and load
+Use Save project and Load project in the Architect page. Projects are JSON files.
 
-## 5. Dataset Studio
+## Export a trained model
+Train a model, select Export trained model and choose a destination. The bundle contains config.json, weights.npz, predict.py and requirements.txt. Install NumPy and run python predict.py in the exported folder.
 
-Open a CSV file. Select a numeric target column. Other numeric columns become inputs. The preview displays up to 100 rows. Rows with missing numeric values and non-numeric columns are excluded from the prepared arrays.
+## Command line
+Install the repository in editable mode using pip install -e . Then use neuralforge info PATH or neuralforge run PATH --input 0,1. From the repository root, use python -m neuralforge.cli.
 
-## 6. Training Center
-
-Select **Use XOR demonstration** to load a four-row example, or load a numeric CSV in Dataset Studio. Set epochs and learning rate, then train. Training progress and mean squared error are displayed.
-
-The current engine is a teaching-focused, full-batch NumPy MLP. It is not intended for large-scale deep learning.
-
-## 7. Testing Laboratory
-
-After training, enter comma-separated numeric values matching the model input width and select Run prediction.
-
-## 8. Current limitations
-
-This release does not yet include a graphical node canvas, convolutional/recurrent model execution, custom Python layer execution, GPU training, an integrated operating-system terminal, or a mobile app. These are planned features, not completed functionality.
+## Limitations
+CNN/RNN execution, real dropout training, GPU acceleration, custom executable layers, full shell terminal, mobile companion, plugin system and installer are not included yet.
