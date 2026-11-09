@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QPushButto
 from ..core.architecture import LayerSpec,validate_architecture
 from ..core.math_engine import weighted_sum_trace,safe_evaluate
 from ..core.mlp import MLP
+from ..core.model_builder import build_mlp
 from ..core.project_store import default_project_dir,save_project,load_project
 from ..core.model_io import architecture_dimensions,save_model_bundle
 from .network_canvas import NetworkCanvas
@@ -137,7 +138,7 @@ class TrainingPage(QWidget):
   try:
    dims=architecture_dimensions(self.layers)
    if self.x.shape[1]!=dims[0] or self.y.shape[1]!=dims[-1]:raise ValueError(f"Data dimensions {self.x.shape[1]}→{self.y.shape[1]} do not match model {dims[0]}→{dims[-1]}.")
-   self.model=MLP(dims); self.train.setEnabled(False); self.progress.setValue(0); self.log.appendPlainText(f"Training architecture {dims}")
+   self.model=build_mlp(self.layers); self.train.setEnabled(False); self.progress.setValue(0); self.log.appendPlainText(f"Training architecture {dims} | activations {[v for v in self.model.activations]} | dropout {self.model.dropout_rates}")
    self.worker=TrainingWorker(self.model,self.x,self.y,self.epochs.value(),self.rate.value()); self.worker.progress.connect(self.on_progress); self.worker.completed.connect(self.done); self.worker.failed.connect(self.fail); self.worker.start()
   except Exception as e:self.train.setEnabled(True); QMessageBox.critical(self,"Training error",str(e))
  def on_progress(self,e,total,loss):self.progress.setMaximum(total); self.progress.setValue(e); self.log.appendPlainText(f"Epoch {e}/{total} — MSE {loss:.7f}")
