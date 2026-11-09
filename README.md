@@ -29,7 +29,7 @@ The optional `neuralforge.core.torch_engine` backend provides executable Dense, 
 This advanced backend is a Python API at this stage; the desktop Training Center still uses the NumPy dense engine. CNN/RNN models are not yet editable and trainable end-to-end from the desktop UI.
 
 ### Extension and distribution infrastructure
-- Plugin discovery through Python entry points in the `neuralforge.plugins` group.
+- In-app Plugin Manager for discovering and loading installed Python entry-point plugins.
 - Trusted custom PyTorch layer registration through `register_layer`.
 - GitHub Actions packaging workflow for Windows and Linux executable folders.
 
@@ -87,7 +87,7 @@ The `.github/workflows/package.yml` workflow builds Windows and Linux packages w
 ## Still outstanding
 
 - Connect the optional PyTorch CNN/RNN backend to the desktop architecture editor and Training Center.
-- Add a full desktop UI for plugin installation, permissions and management.
+- Add in-app plugin installation/uninstallation and per-plugin permission isolation.
 - Build and test a mobile companion interface against real phones.
 - Produce signed releases after signing credentials are configured.
 - Add end-to-end GUI tests on Windows and Linux and test packaged binaries on clean machines.
