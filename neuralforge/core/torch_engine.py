@@ -42,11 +42,14 @@ class NeuralForgeTorchModel(nn.Module):
             elif kind in {"dense", "output"}:
                 modules.extend([nn.Flatten(start_dim=1), nn.LazyLinear(spec.units),
                                 _activation(spec.activation)])
+                previous_units = spec.units
             elif kind in {"conv1d", "convolution1d"}:
                 modules.extend([nn.Conv1d(previous_units, spec.units, kernel_size=3, padding=1),
                                 _activation(spec.activation)])
                 previous_units = spec.units
             elif kind in {"rnn", "recurrent"}:
+                if previous_kind in {"conv1d", "convolution1d"}:
+                    modules.append(_ChannelFirstToSequence())
                 modules.append(nn.RNN(previous_units, spec.units, batch_first=True))
                 modules.append(_LastSequence())
                 modules.append(_activation(spec.activation))
@@ -103,6 +106,11 @@ class NeuralForgeTorchModel(nn.Module):
                                 for name, p in self.named_parameters() if p.grad is not None}}
         self.eval()
         return result
+
+class _ChannelFirstToSequence(nn.Module):
+    def forward(self, tensor):
+        return tensor.transpose(1, 2)
+
 
 class _LastSequence(nn.Module):
     def forward(self, output):
