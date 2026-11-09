@@ -1,67 +1,95 @@
 # NeuralForge AI
 
-A local Python desktop laboratory for designing, training, inspecting and exporting small neural networks. Its interface uses a classic cream-and-beige engineering-software aesthetic.
+NeuralForge AI is a local neural-network engineering laboratory with a classic cream-and-beige desktop interface. It is designed to help learners build architectures, train models, inspect calculations and export predictions without depending on a hosted AI service.
 
-## Current release: 0.2.0 — active development
+## Current development
 
-### Implemented
-- PySide6 desktop shell, cream theme and navigation.
-- Interactive sequential architecture diagram: select layers, edit properties, add/remove and reorder hidden layers.
-- Feed-forward architecture validation.
-- NumPy multilayer perceptron with forward propagation and backpropagation.
-- XOR demonstration training in a background worker.
-- CSV dataset preview and numeric target selection.
-- Mathematical Workbench with three explanation levels and a restricted formula evaluator.
-- Prediction testing with intermediate forward-pass activations.
-- Save/load architecture project JSON.
-- Portable model export with weights, configuration, standalone prediction script and requirements.
-- CLI commands to inspect and run exported models.
-- In-app Python command console.
-- Offline user manual.
+### Working in the desktop application
+- PySide6 desktop shell and classic engineering-software theme.
+- Sequential architecture editor with editable layer sizes, activations and dropout settings.
+- Dense NumPy network training with real ReLU, sigmoid, tanh, linear and softmax activation functions.
+- Inverted dropout during training; dropout is disabled during prediction.
+- Tensor-level dense forward and backpropagation traces, including activations, errors, deltas and parameter gradients.
+- XOR demonstration, CSV dataset preview, training progress and prediction testing.
+- Project JSON save/load, portable model export and command-line inference.
+- In-app mathematical workbench and Python command console.
+- Automated unit tests.
 
-### Not yet implemented
-Convolutional/recurrent execution, true custom-layer execution, dropout training, GPU acceleration, full tensor-level gradient tracing, mobile companion, plugin manager, installer and signed release.
+### Optional advanced execution backend
+Install PyTorch support with:
+
+```bash
+python -m pip install ".[torch]"
+```
+
+The optional `neuralforge.core.torch_engine` backend provides executable Dense, Dropout, Conv1D and RNN layers, automatic device selection (CUDA when available, otherwise CPU), model fitting and named tensor-gradient inspection. Sequence input shapes:
+- Conv1D: `[batch, channels, sequence_length]`
+- RNN: `[batch, sequence_length, features]`
+
+This advanced backend is a Python API at this stage; the desktop Training Center still uses the NumPy dense engine. CNN/RNN models are not yet editable and trainable end-to-end from the desktop UI.
+
+### Extension and distribution infrastructure
+- Plugin discovery through Python entry points in the `neuralforge.plugins` group.
+- Trusted custom PyTorch layer registration through `register_layer`.
+- GitHub Actions packaging workflow for Windows and Linux executable folders.
+
+Plugins are Python code and can access the same permissions as the application. Only install plugins from trusted sources.
 
 ## Install on Windows
 
-Create an environment:
-    py -3 -m venv .venv
-    .\.venv\Scripts\Activate.ps1
-Install:
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-Run:
-    python main.py
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -e .
+python main.py
+```
 
-If activation is blocked:
-    .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-    .\.venv\Scripts\python.exe main.py
+If PowerShell activation is blocked:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e .
+.\.venv\Scripts\python.exe main.py
+```
+
+## Install on Ubuntu / Linux
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -e .
+python main.py
+```
+
+For the optional advanced engine, install `pip install -e ".[torch]"`.
 
 ## CLI
 
-Install editable:
-    pip install -e .
-Inspect a model:
-    neuralforge info PATH_TO_EXPORTED_MODEL
-Run inference:
-    neuralforge run PATH_TO_EXPORTED_MODEL --input 0,1
+```bash
+pip install -e .
+neuralforge info PATH_TO_EXPORTED_MODEL
+neuralforge run PATH_TO_EXPORTED_MODEL --input 0,1
+```
 
-From the repository root you can instead use:
-    python -m neuralforge.cli info PATH_TO_EXPORTED_MODEL
-    python -m neuralforge.cli run PATH_TO_EXPORTED_MODEL --input 0,1
+Or use `python -m neuralforge.cli` from the repository root.
 
 ## Tests
 
-    python -m unittest discover -s tests -v
+```bash
+python -m unittest discover -s tests -v
+```
 
-## Export bundle
+## Desktop packages
 
-An export contains config.json, weights.npz, predict.py, requirements.txt and README.md. A trained bundle can run without opening the desktop app, but the target computer still needs Python and NumPy unless separately packaged.
+The `.github/workflows/package.yml` workflow builds Windows and Linux packages when manually dispatched or when a version tag such as `v0.3.0` is pushed. These builds are unsigned. Windows code-signing requires a certificate and protected signing credentials supplied by the release owner.
 
-## Honest limitations
+## Still outstanding
 
-The current trainer is a small educational dense network. The canvas edits a sequential architecture; it is not a freeform graph editor. Dropout is metadata only and not applied by the trainer. The mathematical workbench has editable worked calculations, not complete live symbolic tracing of every model gradient.
+- Connect the optional PyTorch CNN/RNN backend to the desktop architecture editor and Training Center.
+- Add a full desktop UI for plugin installation, permissions and management.
+- Build and test a mobile companion interface against real phones.
+- Produce signed releases after signing credentials are configured.
+- Add end-to-end GUI tests on Windows and Linux and test packaged binaries on clean machines.
 
-## License
-
-No license has been selected. Standard copyright applies until one is added.
+NeuralForge is an actively developed local application, not a foundation-model trainer. It is intended for learning and experimenting with smaller neural networks.
