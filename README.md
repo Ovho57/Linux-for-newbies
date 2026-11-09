@@ -1,78 +1,88 @@
-# Linux for Newbies — From Your First Command to Expert
+# NeuralForge AI
 
-Linux powers servers, cloud platforms, supercomputers, development machines, and many devices you use every day. This guide is for people who want to understand it properly—not just memorize commands.
+**A classic desktop laboratory for building, training, inspecting and understanding neural networks.**
 
-You don't need previous Linux or programming experience. Start where you are, learn at your own pace, and practise.
+NeuralForge AI is a local Python desktop application with a deliberately old-school scientific-software interface: warm cream workspaces, beige tool panels, traditional menus and practical engineering layouts.
 
-## First: where have you reached in Linux?
+The project is being developed in stages. The current foundation includes a working desktop shell, editable feed-forward network architecture, a NumPy neural-network engine, a mathematical workbench, CSV dataset loading, training and prediction workflows, and local project saving.
 
-Choose the statement that sounds most like you:
+> **Status:** Early development. This repository is not yet a finished product. Features are marked according to what is actually implemented.
 
-| Your experience | Start here |
-|---|---|
-| I've never used Linux and don't know what a terminal is. | [Lesson 00 — Linux basics](lessons/00-linux-basics/README.md) |
-| I know what Linux is, but need to install or try it. | [Lesson 01 — Getting started](lessons/01-getting-started/README.md) |
-| I can open a terminal, but commands are confusing. | [Lesson 02 — Terminal essentials](lessons/02-terminal/README.md) |
-| I can move around folders and use basic commands. | [Lesson 03 — Files and directories](lessons/03-files-and-directories/README.md) |
-| I know basic commands and want to manage a Linux system. | [Roadmap: intermediate topics](ROADMAP.md#intermediate) |
-| I already administer Linux and want deeper internals and automation. | [Roadmap: advanced and expert](ROADMAP.md#advanced-and-expert) |
+## Design philosophy
 
-**Not sure?** Begin with Lesson 00. You can always skip ahead later.
+- Classic 2003–2008 engineering-software aesthetic.
+- Local-first: core work does not require an AI API or internet connection.
+- Educational: explain the mathematics behind model operations.
+- Practical: generated models and saved projects belong to the user.
+- Honest: no fake training progress or placeholder success messages.
 
-## Lessons
+## Current features
 
-1. [Linux basics](lessons/00-linux-basics/README.md)
-2. [Getting started and setup](lessons/01-getting-started/README.md)
-3. [Terminal essentials](lessons/02-terminal/README.md)
-4. [Files and directories](lessons/03-files-and-directories/README.md)
-5. [Reading and editing files](lessons/04-reading-and-editing/README.md)
-6. [Users and permissions](lessons/05-users-and-permissions/README.md)
-7. [Package management](lessons/06-package-management/README.md)
-8. [Processes and jobs](lessons/07-processes-and-jobs/README.md)
-9. [Bash scripting](lessons/08-bash-scripting/README.md)
-10. [Networking](lessons/09-networking/README.md)
-11. [Storage and filesystems](lessons/10-storage/README.md)
-12. [Services and systemd](lessons/11-services-systemd/README.md)
-13. [Logs and troubleshooting](lessons/12-logs-troubleshooting/README.md)
-14. [Linux security](lessons/13-linux-security/README.md)
-15. [Administration and automation](lessons/14-admin-automation/README.md)
-16. [Kernel and system internals](lessons/15-kernel-internals/README.md)
-17. [Expert practice projects](lessons/16-expert-projects/README.md)
+- [x] PySide6 desktop window with classic cream/beige styling.
+- [x] Dashboard and workspace navigation.
+- [x] Add, remove and reorder Dense, Input, Dropout and Output layer definitions.
+- [x] Validate feed-forward architecture dimensions.
+- [x] NumPy multilayer perceptron with forward pass and backpropagation.
+- [x] Train a small classifier on CSV data or the built-in XOR example.
+- [x] Training loss history and accuracy reporting.
+- [x] Mathematical Workbench with Beginner, Intermediate and Advanced explanations.
+- [x] Editable demonstration values for weighted sums.
+- [x] Save and load model weights and project configuration locally.
+- [x] Test predictions using numeric input values.
+- [x] Unit tests for the model engine and mathematics utilities.
 
-## How to study
+## Planned modules
 
-- Read one lesson, then run the examples yourself.
-- Make small changes and predict the result before pressing Enter.
-- Complete the exercises without immediately checking solutions.
-- Keep a notebook of commands and concepts.
-- Use a virtual machine or disposable environment for system-level experiments.
-- If something breaks, learn to read the error message instead of blindly copying another command.
+The following are planned, not yet complete: visual node-and-connection canvas, convolutional and recurrent networks, custom Python layers, advanced tensor tracing, computer vision and NLP labs, plugin manager, experiment comparison, integrated terminal, mobile companion, installer and signed releases.
 
-## Safety note
+## Requirements
 
-Commands can delete files, alter permissions, stop services, or damage a system. Don't run commands you don't understand, especially when they use `sudo`, `rm`, disk tools, or recursive options. Back up important files and practise system changes in a virtual machine. Security exercises should only target systems you own or have explicit permission to test.
+- Python 3.10 or newer
+- Windows 10/11 initially; other platforms may work but are not yet officially tested
 
-## Useful learning links
+## Install
 
-- [Linux Journey](https://linuxjourney.com/) — friendly interactive beginner lessons.
-- [The Linux Documentation Project](https://tldp.org/) — guides and documentation.
-- [Ubuntu Help](https://help.ubuntu.com/) — Ubuntu user and system documentation.
-- [Debian Documentation](https://www.debian.org/doc/) — manuals and official guides.
-- [Arch Wiki](https://wiki.archlinux.org/) — detailed technical reference.
-- [GNU Bash manual](https://www.gnu.org/software/bash/manual/) — Bash reference.
-- [Linux man-pages](https://www.kernel.org/doc/man-pages/) — Linux command and system interface documentation.
-- [OverTheWire Bandit](https://overthewire.org/wargames/bandit/) — terminal puzzle game in a controlled environment.
-- [WSL documentation](https://learn.microsoft.com/en-us/windows/wsl/) — Linux environment on Windows.
-- [VirtualBox](https://www.virtualbox.org/) — virtual machines for safe practice.
+Create and activate a virtual environment:
 
-## What you'll learn
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
 
-You'll build confidence with the shell, filesystem, permissions, software installation, processes, scripting, networking, storage, services, logs, security fundamentals, troubleshooting, administration, and system internals.
+Install dependencies:
 
-Becoming an expert takes hands-on experience. This repository is a roadmap and practice resource, not a shortcut.
+```powershell
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
 
-## Contributing
+Run:
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) if you want to improve a lesson or add examples.
+```powershell
+python main.py
+```
 
-**Start learning:** [Lesson 00 — Linux basics](lessons/00-linux-basics/README.md)
+If PowerShell blocks activation, use the environment's interpreter directly:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe main.py
+```
+
+## Tests
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+## Project data
+
+Projects are saved in the user's Documents folder under `NeuralForge/projects` by default. Model weights are stored as NumPy `.npz` files and configuration as JSON.
+
+## Safety and execution
+
+NeuralForge does not execute arbitrary user-entered formulas with Python `eval`. The formula utility accepts a restricted mathematical expression grammar. Custom Python layer execution and a general-purpose integrated terminal are not implemented in this initial foundation.
+
+## License
+
+No license has been selected yet. Until a license is added, standard copyright applies to contributions in this repository.
